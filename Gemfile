@@ -70,3 +70,9 @@ group :test do
   gem "selenium-webdriver"
 
 end
+
+# Authentication for users
+gem 'devise'
+
+# For background job processing
+gem 'sidekiq'
