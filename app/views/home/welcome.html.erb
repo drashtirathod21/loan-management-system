@@ -1,0 +1,10 @@
+<h1>Welcome to Loan Management System</h1>
+
+<% if user_signed_in? %>
+  <p>Welcome, <%= current_user.name %>!</p>
+  <%= link_to 'Edit Profile', edit_user_registration_path %> <br><br>
+  <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+<% else %>
+  <%= link_to 'Sign Up', new_user_registration_path %> |
+  <%= link_to 'Sign In', new_user_session_path %>
+<% end %>
