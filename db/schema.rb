@@ -10,7 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_30_085625) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_30_110941) do
+  create_table "loan_types", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "loans", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "loan_type_id", null: false
+    t.decimal "amount", precision: 10, scale: 2
+    t.decimal "interest_rate", precision: 5, scale: 2, default: "0.05"
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["loan_type_id"], name: "index_loans_on_loan_type_id"
+    t.index ["status"], name: "index_loans_on_status"
+    t.index ["user_id"], name: "index_loans_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -26,4 +46,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_30_085625) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "loans", "loan_types"
+  add_foreign_key "loans", "users"
 end
