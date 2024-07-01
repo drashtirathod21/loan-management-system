@@ -31,3 +31,55 @@ table, th, td {
 .alert {
   color: red;
 }
+
+.approve-link {
+  color: green;
+}
+
+.reject-link {
+  color: red;
+}
+
+.new-div {
+  padding: 10px 0px;
+}
+
+.approve-button {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  border-radius: 5px;
+}
+
+.approve-button:hover {
+  background-color: darkgreen;
+  color: white;
+}
+
+.reject-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  border-radius: 5px;
+}
+
+.reject-button:hover {
+  background-color: rgb(234, 60, 60);
+  color: white;
+}

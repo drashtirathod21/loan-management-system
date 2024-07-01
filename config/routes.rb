@@ -4,5 +4,13 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#welcome"
-  resources :loans
+
+  resources :loans do
+    member do
+      patch :approve
+      patch :reject
+      patch :confirm_loan
+      patch :reject_by_user
+    end
+  end
 end

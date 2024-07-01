@@ -17,13 +17,6 @@
     <%= form.number_field :amount %>
   </div><br>
 
-  <% if current_user.admin? %>
-    <div class='field'>
-      <%= form.label :interest_rate %>
-      <%= form.text_field :interest_rate, value: number_to_percentage(@loan.interest_rate * 100, precision: 2) %>
-    </div><br>
-  <% end %>
-
   <div class='actions'>
     <%= form.submit class: 'btn btn-primary'  %>
   </div><br>
