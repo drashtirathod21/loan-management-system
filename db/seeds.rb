@@ -8,3 +8,6 @@
 
 User.create(name: 'Admin User', email: 'admin@mail.com', password: 'admin@123', password_confirmation: 'admin@123', role: 1)
 User.create(name: 'ABC User', email: 'abc@mail.com', password: 'abc@123', password_confirmation: 'abc@123', role: 0)
+
+LoanType.create(name: 'Home Loan', description: 'home loan')
+LoanType.create(name: 'Education Loan', description: 'education loan')

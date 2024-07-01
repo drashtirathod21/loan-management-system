@@ -1,0 +1,32 @@
+<% if flash[:errors].present? %>
+  <ul>
+    <% flash[:errors].each do |message| %>
+      <p style='color: red;'><%= message %></p>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with(model: @loan, local: true) do |form| %>
+  <div class='field'>
+    <%= form.label :loan_type_id %>
+    <%= form.select :loan_type_id, options_for_select(LoanType.all.map{ |lt| [lt.name, lt.id] }) %>
+  </div><br>
+
+  <div class='field'>
+    <%= form.label :amount %>
+    <%= form.number_field :amount %>
+  </div><br>
+
+  <% if current_user.admin? %>
+    <div class='field'>
+      <%= form.label :interest_rate %>
+      <%= form.text_field :interest_rate, value: number_to_percentage(@loan.interest_rate * 100, precision: 2) %>
+    </div><br>
+  <% end %>
+
+  <div class='actions'>
+    <%= form.submit class: 'btn btn-primary'  %>
+  </div><br>
+<% end %>
+
+<%= link_to 'Back', loans_path %>

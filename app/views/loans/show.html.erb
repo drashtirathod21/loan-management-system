@@ -1,0 +1,38 @@
+<h1>Loan Details</h1>
+
+<p>
+  <strong>Loan Type:</strong>
+  <%= @loan.loan_type.name %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @loan.amount %>
+</p>
+
+<p>
+  <strong>Interest Rate (%):</strong>
+  <%= format_as_percentage(@loan.interest_rate) %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @loan.status.capitalize %>
+</p>
+
+<% if current_user.admin? %>
+  <p>
+    <strong>User:</strong>
+    <%= @loan.user.name %>
+  </p>
+<% end %>
+
+<% if can?(:edit, @loan) %>
+  <%= link_to 'Edit', edit_loan_path(@loan) %> |
+<% end %>
+
+<%= link_to 'Back', loans_path %><br><br>
+
+<% if can?(:destroy, @loan) %>
+  <%= button_to 'Delete', @loan, method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}} if can?(:destroy, @loan) %>  
+<% end %>

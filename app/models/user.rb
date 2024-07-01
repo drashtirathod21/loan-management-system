@@ -4,9 +4,16 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  # Association
+  has_many :loans
+
+  # Enum for user roles
   enum role: { user: 0, admin: 1 }
+
+  # Validations
   validates :name, presence: true, uniqueness: true
 
+  # Callbacks
   after_initialize :set_default_wallet_balance, if: :new_record?
 
   private
