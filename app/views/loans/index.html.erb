@@ -1,5 +1,5 @@
 <h1>Loans</h1>
-
+<h3>Wallet Balance: <%= current_user.wallet_balance %></h3>
 <% if @loans.any? %>
   <table style='border-collapse: collapse; width: 60%; text-align: center; border: solid 1px black;'>
     <thead>
@@ -20,7 +20,7 @@
           <td><%= loan.loan_type.name %></td>
           <td><%= loan.amount %></td>
           <td><%= format_as_percentage(loan.interest_rate) %></td>
-          <td><%= loan.status.capitalize %></td>
+          <td><b><%= loan.status.capitalize %></b></td>
           <% if current_user.admin? %>
             <td><%= loan.user.name %></td>
           <% end %>

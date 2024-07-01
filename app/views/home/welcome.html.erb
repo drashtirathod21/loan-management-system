@@ -2,6 +2,7 @@
 
 <% if user_signed_in? %>
   <p>Welcome, <%= current_user.name %>!</p>
+  <h4>Your Wallet Balance is <%= current_user.wallet_balance %></h4>
   <%= link_to 'View Loans', loans_path %> <br><br>
   <%= link_to 'Edit Profile', edit_user_registration_path %> <br><br>
   <%= button_to 'Sign out', destroy_user_session_path, method: :delete %>

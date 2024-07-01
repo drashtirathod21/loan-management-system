@@ -17,7 +17,7 @@
 
 <p>
   <strong>Status:</strong>
-  <%= @loan.status.capitalize %>
+  <b><%= @loan.status.capitalize %></b>
 </p>
 
 <% if current_user.admin? %>
@@ -33,6 +33,27 @@
 
 <%= link_to 'Back', loans_path %><br><br>
 
-<% if can?(:destroy, @loan) %>
-  <%= button_to 'Delete', @loan, method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}} if can?(:destroy, @loan) %>  
+<% if current_user.admin? && @loan.requested? %>
+  <h2>Approve or Reject Loan</h2>
+  <div class="new-div">
+    <%= form_with(model: @loan, url: approve_loan_path(@loan), method: :patch) do |form| %>
+      <div class="field">
+        <%= form.label :interest_rate %>
+        <%= form.number_field :interest_rate, step: 0.01, value: @loan.interest_rate * 100, min: 0, max: 100, placeholder: "Enter interest rate in %" %>
+      </div><br>
+      <div class="actions">
+        <%= form.submit "Approve Loan", class: "btn btn-success approve-button" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="new-div">
+    <%= button_to 'Reject Loan', reject_loan_path(@loan), method: :patch, class: "btn btn-danger reject-button", form: { data: { turbo_confirm: 'Are you sure you want to reject this loan?' } } %>
+  </div>
+<% elsif current_user == @loan.user && @loan.approved? %>
+  <h2 class="notice">Congratulations, your loan has been approved with <%= @loan.interest_rate * 100 %> interest rate!</h2>
+  <p>Please confirm or reject the loan from below options :</p>
+  <%= button_to 'Confirm Loan', confirm_loan_loan_path(@loan), method: :patch, class: 'btn btn-success approve-button', form: { data: { turbo_confirm: 'Are you sure you want to confirm this loan?' } } %>
+  <%= button_to 'Reject Loan', reject_by_user_loan_path(@loan), method: :patch, class: 'btn btn-danger reject-button', form: { data: { turbo_confirm: 'Are you sure you want to reject this loan?' } }  %>
+<% elsif current_user == @loan.user && @loan.rejected? %>
+  <h3 class="alert">Sorry, your loan has been rejected!</h3>
 <% end %>
