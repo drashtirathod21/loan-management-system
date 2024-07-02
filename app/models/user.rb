@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   # Association
   has_many :loans
+  has_many :notifications
 
   # Enum for user roles
   enum role: { user: 0, admin: 1 }

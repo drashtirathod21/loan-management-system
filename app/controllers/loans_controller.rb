@@ -1,7 +1,7 @@
 class LoansController < ApplicationController
   load_and_authorize_resource
   before_action :set_loan, except: [:index, :new, :create]
-  before_action :set_admin, only: [:confirm_loan, :reject_by_user]
+  before_action :set_admin, only: [:confirm_loan, :reject_by_user, :repay]
 
   def index
     if current_user.admin?
@@ -101,6 +101,27 @@ class LoansController < ApplicationController
     else
       flash[:alert] = "You cannot reject this loan"
     end
+    redirect_to loan_path(@loan)
+  end
+
+  def repay
+    authorize! :update, @loan
+    if current_user == @loan.user && @loan.open?
+      total_loan_amount = @loan.amount
+
+      if current_user.wallet_balance >= total_loan_amount
+        current_user.update(wallet_balance: current_user.wallet_balance - total_loan_amount)
+        @admin.update(wallet_balance: @admin.wallet_balance + total_loan_amount)
+        @loan.update(status: :closed)
+
+        flash[:notice] = "Loan repaid successfully. The amount has been debited from your wallet and credited to the admin's wallet."
+      else
+        flash[:alert] = "Insufficient funds in your wallet to repay the loan."
+      end
+    else
+      flash[:alert] = "You cannot repay this loan."
+    end
+
     redirect_to loan_path(@loan)
   end
 

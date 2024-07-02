@@ -11,6 +11,13 @@ Rails.application.routes.draw do
       patch :reject
       patch :confirm_loan
       patch :reject_by_user
+      patch :repay
+    end
+  end
+
+  resources :notifications, only: [:index] do
+    member do
+      patch :mark_as_read
     end
   end
 end

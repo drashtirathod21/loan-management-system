@@ -1,9 +1,10 @@
 <h1>Loans</h1>
-<h3>Wallet Balance: <%= current_user.wallet_balance %></h3>
+<h3>Wallet Balance: <%= number_to_currency(current_user.wallet_balance, unit: "₹", precision: 2) %></h3>
 <% if @loans.any? %>
   <table style='border-collapse: collapse; width: 60%; text-align: center; border: solid 1px black;'>
     <thead>
       <tr>
+        <th>Id</th>
         <th>Loan Type</th>
         <th>Amount</th>
         <th>Interest Rate (%)</th>
@@ -17,8 +18,9 @@
     <tbody>
       <% @loans.each do |loan| %>
         <tr>
+          <td><%= loan.id %></td>
           <td><%= loan.loan_type.name %></td>
-          <td><%= loan.amount %></td>
+          <td><%= number_to_currency(loan.amount, unit: "₹", precision: 2) %></td>
           <td><%= format_as_percentage(loan.interest_rate) %></td>
           <td><b><%= loan.status.capitalize %></b></td>
           <% if current_user.admin? %>
