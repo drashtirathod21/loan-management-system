@@ -77,7 +77,8 @@ end
 gem 'devise'
 
 # For background job processing
-gem 'sidekiq'
+gem 'sidekiq', '~> 6.5.0'
+gem 'sidekiq-scheduler', '~> 3.1' 
 
 # For user authorization
 gem 'cancancan'

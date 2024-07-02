@@ -6,8 +6,14 @@
 </p>
 
 <p>
-  <strong>Amount:</strong>
-  <%= @loan.amount %>
+  <strong>
+    <% if @loan.open? %>
+      Total Loan Amount (Principal + Interest):
+    <% else %>
+      Amount:
+    <% end %>
+    </strong>
+  <%= number_to_currency(@loan.amount, unit: "₹", precision: 2) %>
 </p>
 
 <p>
@@ -42,7 +48,7 @@
         <%= form.number_field :interest_rate, step: 0.01, value: @loan.interest_rate * 100, min: 0, max: 100, placeholder: "Enter interest rate in %" %>
       </div><br>
       <div class="actions">
-        <%= form.submit "Approve Loan", class: "btn btn-success approve-button" %>
+        <%= form.submit "Approve Loan", class: "btn btn-success approve-button", data: { turbo_confirm: 'Are you sure you want to approve this loan?' } %>
       </div>
     <% end %>
   </div>
@@ -56,4 +62,6 @@
   <%= button_to 'Reject Loan', reject_by_user_loan_path(@loan), method: :patch, class: 'btn btn-danger reject-button', form: { data: { turbo_confirm: 'Are you sure you want to reject this loan?' } }  %>
 <% elsif current_user == @loan.user && @loan.rejected? %>
   <h3 class="alert">Sorry, your loan has been rejected!</h3>
+<% elsif current_user == @loan.user && @loan.open? %>
+  <%= button_to 'Repay Loan', repay_loan_path(@loan), method: :patch, class: 'btn btn-primary approve-button', form: { data: { turbo_confirm: 'Are you sure you want to repay this loan?' } } %>
 <% end %>

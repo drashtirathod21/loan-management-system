@@ -9,7 +9,7 @@ class Ability
       cannot :create, Loan
       can :approve, Loan
       can :reject, Loan
-      cannot [:confirm_loan, :reject_by_user], Loan
+      cannot [:confirm_loan, :reject_by_user, :repay], Loan
     else
       can :manage, Loan, user_id: user.id
       can :update, Loan, user_id: user.id
@@ -17,6 +17,7 @@ class Ability
       cannot :reject, Loan
       can :confirm_loan, Loan, user_id: user.id
       can :reject_by_user, Loan, user_id: user.id
+      can :repay, Loan, user_id: user.id
     end
   end
 end

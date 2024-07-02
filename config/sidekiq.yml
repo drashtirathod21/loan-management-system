@@ -1,0 +1,8 @@
+:concurrency: 5
+:queues:
+  - default
+:schedule:
+  interest_calculation_job:
+    cron: "*/1 * * * *"     # Runs every 5 minutes
+    class: "InterestCalculationJob"
+    queue: default
